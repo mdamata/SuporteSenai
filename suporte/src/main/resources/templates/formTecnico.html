@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Assumir Solicitação - SENAI</title>
+  <link rel="stylesheet" href="../css/estilo.css"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+  <!-- Restante do código permanece igual -->
+  <header class="cabecalho">
+    <div class="container-cabecalho justify-content-start">
+      <img src="../imagens/Logo-novo-SENAI_-sem-slogan_755X325.png" alt="Logotipo SENAI" class="logo-senai-novo">
+      <h1 class="titulo-escola">Escola Frederico Jacob</h1>
+    </div>
+    <hr class="linha-vermelha">
+  </header>
+
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="container-bg">
+          <h2 class="text-center mb-4">Assumir Solicitação</h2>
+          
+          <!-- Exibe dados da solicitação -->
+          <div class="card mb-4">
+            <div class="card-header">
+              <h5>Dados da Solicitação</h5>
+            </div>
+            <div class="card-body">
+              <p><strong>ID:</strong> <span th:text="${solicitacao.id}"></span></p>
+              <p><strong>Solicitante:</strong> <span th:text="${solicitacao.nomeSolicitante}"></span></p>
+              <p><strong>Sala:</strong> <span th:text="${solicitacao.numeroSala}"></span></p>
+              <p><strong>Problema:</strong> <span th:text="${solicitacao.descricaoProblema}"></span></p>
+            </div>
+          </div>
+
+          <!-- Formulário do técnico -->
+          <form method="POST" th:action="@{/assumirSolicitacao}">
+            <input type="hidden" name="idSolicitacao" th:value="${solicitacao.id}">
+            
+            <div class="mb-3">
+              <label class="form-label required">Nome do Técnico Responsável</label>
+              <input type="text" class="form-control" name="tecnicoResponsavel" required>
+            </div>
+            
+            <div class="mb-3">
+              <label class="form-label">Observações</label>
+              <textarea class="form-control" name="observacoes" rows="4" 
+                        placeholder="Descreva as ações realizadas ou observações..."></textarea>
+            </div>
+            
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+              <a th:href="@{/painelTecnico}" class="btn btn-secondary me-md-2">Cancelar</a>
+              <button type="submit" class="btn btn-primary">Assumir Solicitação</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

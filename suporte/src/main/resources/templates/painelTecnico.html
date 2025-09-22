@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Painel do Técnico - SENAI</title>
+  <link rel="stylesheet" href="css/estilo.css"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+</head>
+<body>
+  <header class="cabecalho">
+    <div class="container-cabecalho justify-content-start">
+      <img src="imagens/Logo-novo-SENAI_-sem-slogan_755X325.png" alt="Logotipo SENAI" class="logo-senai-novo">
+      <h1 class="titulo-escola">Escola Frederico Jacob</h1>
+    </div>
+    <hr class="linha-vermelha">
+  </header>
+
+  <div class="container container-bg">
+    <!-- Mensagens de feedback -->
+    <div th:if="${mensagem}" class="alert alert-success alert-dismissible fade show" role="alert">
+      <span th:text="${mensagem}"></span>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    
+    <div th:if="${erro}" class="alert alert-danger alert-dismissible fade show" role="alert">
+      <span th:text="${erro}"></span>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h2 class="text-center mb-0">Painel do Técnico</h2>
+      <a th:href="@{/}" class="btn btn-secondary">Voltar à Página Inicial</a>
+    </div>
+
+    <div th:if="${solicitacoes.empty}" class="alert alert-info">
+      Nenhuma solicitação encontrada.
+    </div>
+
+    <div class="table-responsive" th:unless="${solicitacoes.empty}">
+      <table class="table table-bordered table-hover">
+        <thead class="table-dark">
+          <tr>
+            <th>ID</th>
+            <th>NIF</th>
+            <th>Solicitante</th>
+            <th>Sala</th>
+            <th>Patrimônio</th>
+            <th>Descrição</th>
+            <th>Tipo Problema</th>
+            <th>Status</th>
+            <th>Suporte</th>
+            <th>Ações</th>
+            <th>Excluir</th> <!-- NOVA COLUNA -->
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="solicitacao : ${solicitacoes}">
+            <td th:text="${solicitacao.id}"></td>
+            <td th:text="${solicitacao.nif}"></td>
+            <td th:text="${solicitacao.nomeSolicitante}"></td>
+            <td th:text="${solicitacao.numeroSala}"></td>
+            <td th:text="${solicitacao.codigoPatrimonio}"></td>
+            <td th:text="${solicitacao.descricaoProblema}"></td>
+            <td th:text="${solicitacao.tipoProblema}"></td>
+            <td>
+              <span th:if="${#strings.equalsIgnoreCase(solicitacao.status, 'Pendente')}" class="badge bg-warning">Pendente</span>
+              <span th:if="${#strings.equalsIgnoreCase(solicitacao.status, 'Em Andamento')}" class="badge bg-primary">Em Andamento</span>
+              <span th:if="${#strings.equalsIgnoreCase(solicitacao.status, 'Concluído')}" class="badge bg-success">Concluído</span>
+            </td>
+            <td>
+              <a th:if="${#strings.equalsIgnoreCase(solicitacao.status, 'Pendente')}" 
+                 th:href="@{/concluirSolicitacao/} + ${solicitacao.id}" 
+                 class="btn btn-sm btn-success">Concluir</a>
+              <span th:if="${not #strings.equalsIgnoreCase(solicitacao.status, 'Pendente')}" class="text-muted">-</span>
+            </td>
+            <td>
+              <a th:if="${#strings.equalsIgnoreCase(solicitacao.status, 'Pendente')}" 
+                 th:href="@{/assumirSolicitacao/} + ${solicitacao.id}" 
+                 class="btn btn-sm btn-primary">Assumir</a>
+              
+              <a th:if="${#strings.equalsIgnoreCase(solicitacao.status, 'Em Andamento')}" 
+                 th:href="@{/concluirSolicitacao/} + ${solicitacao.id}" 
+                 class="btn btn-sm btn-success">Concluir</a>
+              
+              <a th:href="@{'/editarSolicitacao/' + ${solicitacao.id}}" 
+                 class="btn btn-sm btn-warning">Editar</a>
+            </td>
+            <td>
+              <!-- 🔥 NOVO: BOTÃO PARA EXCLUIR -->
+              <form th:action="@{'/excluirSolicitacao/' + ${solicitacao.id}}" method="POST" style="display: inline;">
+                <input type="hidden" name="_method" value="DELETE">
+                <button type="submit" class="btn btn-sm btn-danger" 
+                        onclick="return confirm('Tem certeza que deseja excluir esta solicitação?')">
+                  <i class="bi bi-trash"></i> Excluir
+                </button>
+              </form>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

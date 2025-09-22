@@ -1,0 +1,97 @@
+body {
+  background: url('../imagens/fundoSuporte.jpg') no-repeat top left;
+  background-size: cover;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+}
+
+.container-bg {
+  background-color: rgba(255, 255, 255, 0.95);
+  border-radius: 12px;
+  padding: 30px;
+  margin-top: 40px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+
+h2 {
+  color: #003865; /* Azul escuro SENAI */
+}
+
+.required::after {
+  content: '*';
+  color: red;
+}
+
+.status-pendente {
+  background-color: #f8d7da !important;
+}
+
+.status-concluido {
+  background-color: #d4edda !important;
+}
+
+.btn-danger, .btn-primary {
+  background-color: #d71920;
+  border-color: #d71920;
+}
+
+.btn-danger:hover, .btn-primary:hover {
+  background-color: #a01318;
+  border-color: #a01318;
+}
+
+.table thead {
+  background-color: #003865;
+  color: white;
+}
+
+.logo-senai {
+  width: 160px;
+  height: auto;
+  position: absolute;
+  top: 10px;
+  right: 20px;
+}
+.cabecalho {
+  padding: 20px 30px 10px 30px;
+}
+
+.container-cabecalho {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.logo-senai-novo {
+  height: 80px;
+  width: auto;
+}
+
+.titulo-escola {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #003865;
+  margin: 0;
+  text-align: center;
+}
+
+.titulo-escola {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #003865; /* Azul SENAI */
+  margin: 0;
+}
+
+.logo-senai-novo {
+  height: 80px;
+  width: auto;
+}
+
+.linha-vermelha {
+  height: 4px;
+  background-color: #d71920;
+  border: none;
+  margin-top: 10px;
+}
+
